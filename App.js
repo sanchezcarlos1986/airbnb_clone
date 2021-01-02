@@ -1,11 +1,16 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { HomeScreen, SearchResults } from "~/screens/";
+import {
+  HomeScreen,
+  SearchResults,
+  DestinationSearch,
+  Guests,
+} from "~/screens/";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <SearchResults />
+      <Guests />
     </View>
   );
 }
