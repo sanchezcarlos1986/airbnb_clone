@@ -1,16 +1,12 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import {
-  HomeScreen,
-  SearchResults,
-  DestinationSearch,
-  Guests,
-} from "~/screens/";
+import { StatusBar, StyleSheet, View } from "react-native";
+import Router from "~/navigation/Router";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Guests />
+      <StatusBar />
+      <Router />
     </View>
   );
 }

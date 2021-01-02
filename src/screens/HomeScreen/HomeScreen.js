@@ -3,13 +3,13 @@ import { View, ImageBackground, Text, Pressable } from "react-native";
 import { styles } from "./HomeScreen.styles";
 import { Fontisto } from "@expo/vector-icons";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Pressable
         style={styles.searchButton}
         onPress={() => {
-          console.log("Where are you going?");
+          navigation.navigate("Destination Search");
         }}
       >
         <Fontisto name="search" size={25} color="#f15454" />
