@@ -1,0 +1,148 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<HomeScreen /> test against snapshot 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "justifyContent": "flex-start",
+    }
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "white",
+        "borderRadius": 100,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "paddingHorizontal": 20,
+        "paddingVertical": 12,
+        "position": "absolute",
+        "top": 45,
+        "width": "90%",
+        "zIndex": 5,
+      }
+    }
+  >
+    <Text />
+    <Text
+      style={
+        Object {
+          "fontSize": 16,
+          "fontWeight": "bold",
+          "marginLeft": 10,
+        }
+      }
+    >
+      Where are you going?
+    </Text>
+  </View>
+  <View
+    accessibilityIgnoresInvertColors={true}
+    style={
+      Object {
+        "height": 500,
+        "justifyContent": "center",
+        "resizeMode": "cover",
+        "width": "100%",
+      }
+    }
+  >
+    <Image
+      source={1}
+      style={
+        Array [
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          Object {
+            "height": 500,
+            "width": "100%",
+          },
+          undefined,
+        ]
+      }
+    />
+    <View
+      style={
+        Object {
+          "alignItems": "flex-start",
+          "padding": 20,
+          "width": 750,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 100,
+            "fontWeight": "bold",
+            "lineHeight": 100,
+            "textShadowColor": "rgba(0,0,0,.4)",
+            "textShadowOffset": Object {
+              "height": 5,
+              "width": 1,
+            },
+            "textShadowRadius": 10,
+            "width": "70%",
+          }
+        }
+      >
+        Go Near
+      </Text>
+      <View
+        accessible={true}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "white",
+            "borderRadius": 8,
+            "marginTop": 20,
+            "paddingHorizontal": 20,
+            "paddingVertical": 12,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Explore nearby stays
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

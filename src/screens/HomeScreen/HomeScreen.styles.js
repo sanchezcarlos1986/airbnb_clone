@@ -18,6 +18,12 @@ export const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
   },
   title: {
+    textShadowOffset: {
+      height: 5,
+      width: 1,
+    },
+    textShadowColor: "rgba(0,0,0,.4)",
+    textShadowRadius: 10,
     color: "white",
     fontSize: 100,
     fontWeight: "bold",
