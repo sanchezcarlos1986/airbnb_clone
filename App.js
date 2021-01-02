@@ -1,12 +1,14 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { HomeScreen } from "~/screens/";
+// import { HomeScreen } from "~/screens/";
 import { Post } from "~/components/";
+
+import feeds from "./assets/data/feed";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Post />
+      <Post post={feeds[0]} />
     </View>
   );
 }
