@@ -16,28 +16,22 @@ const DestinationItem = ({ item, navigation }) => (
   </Pressable>
 );
 
-const DestinationSearch = ({ navigation }) => {
-  const [inputText, setInputText] = useState("");
-  return (
-    <View style={styles.container}>
-      <GooglePlacesAutocomplete
-        placeholder="Where are you going?"
-        onFail={(error) =>
-          console.log("GooglePlacesAutocomplete error" + error)
-        }
-        onPress={(data, details = null) => console.log(data, details)}
-        query={{
-          key: GOOGLE_API,
-          language: "en",
-          types: "cities",
-        }}
-        renderRow={(item) => (
-          <DestinationItem item={item} navigation={navigation} />
-        )}
-        suppressDefaultStyles
-      />
-    </View>
-  );
-};
+const DestinationSearch = ({ navigation }) => (
+  <View style={styles.container}>
+    <GooglePlacesAutocomplete
+      placeholder="Where are you going?"
+      onFail={(error) => console.log("GooglePlacesAutocomplete error" + error)}
+      onPress={(data, details = null) => console.log(data, details)}
+      query={{
+        key: GOOGLE_API,
+        language: "en",
+      }}
+      renderRow={(item) => (
+        <DestinationItem item={item} navigation={navigation} />
+      )}
+      suppressDefaultStyles
+    />
+  </View>
+);
 
 export default DestinationSearch;
