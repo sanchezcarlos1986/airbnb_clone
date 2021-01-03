@@ -3,10 +3,13 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 20,
+    padding: 20,
+    backgroundColor: "white",
+    height: 400,
   },
   textInput: {
     fontSize: 20,
+    marginTop: 50,
   },
   row: {
     alignItems: "center",
@@ -21,5 +24,5 @@ export const styles = StyleSheet.create({
     marginRight: 10,
     padding: 7,
   },
-  locationText: {},
+  results: {},
 });

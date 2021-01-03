@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, FlatList, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { styles } from "./DestinationSearch.styles";
 import { Entypo } from "@expo/vector-icons";
-import searchResults from "../../../assets/data/search";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete/";
+import { GOOGLE_API } from "../../config";
 
 const DestinationItem = ({ item, navigation }) => (
   <Pressable onPress={() => navigation.navigate("Guests")}>
@@ -19,21 +20,21 @@ const DestinationSearch = ({ navigation }) => {
   const [inputText, setInputText] = useState("");
   return (
     <View style={styles.container}>
-      {/* Input component */}
-      <TextInput
-        style={styles.textInput}
+      <GooglePlacesAutocomplete
         placeholder="Where are you going?"
-        value={inputText}
-        onChangeText={setInputText}
-      />
-
-      {/* List of destinations */}
-      <FlatList
-        data={searchResults}
-        renderItem={({ item }) => (
+        onFail={(error) =>
+          console.log("GooglePlacesAutocomplete error" + error)
+        }
+        onPress={(data, details = null) => console.log(data, details)}
+        query={{
+          key: GOOGLE_API,
+          language: "en",
+          types: "cities",
+        }}
+        renderRow={(item) => (
           <DestinationItem item={item} navigation={navigation} />
         )}
-        keyExtractor={(item) => item.id}
+        suppressDefaultStyles
       />
     </View>
   );
