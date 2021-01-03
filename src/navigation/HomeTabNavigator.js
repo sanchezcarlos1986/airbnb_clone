@@ -2,7 +2,6 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import {
-  Entypo,
   Fontisto,
   FontAwesome,
   FontAwesome5,
@@ -10,20 +9,16 @@ import {
   EvilIcons,
 } from "@expo/vector-icons";
 
-import {
-  HomeScreen,
-  SearchResults,
-  DestinationSearch,
-  Guests,
-} from "~/screens/";
+import { HomeScreen } from "~/screens/";
+import ExploreNavigator from "~/navigation/ExploreNavigator";
 
 const Tab = createBottomTabNavigator();
 
 const HomeTabNavigator = () => (
   <Tab.Navigator tabBarOptions={{ activeTintColor: "#f15454" }}>
     <Tab.Screen
-      name="HomeScreen"
-      component={HomeScreen}
+      name="Explore"
+      component={ExploreNavigator}
       options={{
         tabBarIcon: ({ color }) => (
           <Fontisto name="search" size={30} color={color} />
