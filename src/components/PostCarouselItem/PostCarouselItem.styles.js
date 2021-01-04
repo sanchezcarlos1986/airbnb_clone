@@ -6,6 +6,14 @@ export const styles = StyleSheet.create({
     height: 150,
     width: Dimensions.get("window").width - 60,
     flex: 1,
+    shadowColor: "black",
+    shadowOffset: {
+      height: 5,
+      width: 0,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+    elevation: 10,
   },
   innerContainer: {
     backgroundColor: "white",
@@ -16,6 +24,7 @@ export const styles = StyleSheet.create({
   image: {
     resizeMode: "cover",
     aspectRatio: 1,
+    width: 130,
   },
   content: {
     flex: 1,

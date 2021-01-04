@@ -1,12 +1,12 @@
 import React from "react";
-import { View, Image, Text, ImageBackground } from "react-native";
+import { View, Image, Text } from "react-native";
 import { styles } from "./PostCarouselItem.styles";
 
 const PostCarouselItem = ({ post }) => {
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-        <ImageBackground style={styles.image} source={{ uri: post.image }} />
+        <Image style={styles.image} source={{ uri: post.image }} />
 
         {/* Beds and Bedroom */}
         <View style={styles.content}>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { View, FlatList, Dimensions } from "react-native";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { styles } from "./SearchResultsMap.styles";
 import { MapMarker, PostCarouselItem } from "~/components";
 import places from "../../../assets/data/feed";
@@ -37,7 +37,15 @@ const SearchResultsMap = () => {
           })}
       </MapView>
       <View style={styles.carousel}>
-        <PostCarouselItem post={places[0]} />
+        <FlatList
+          data={places}
+          renderItem={({ item }) => <PostCarouselItem post={item} />}
+          keyExtractor={(item) => item.id}
+          horizontal
+          snapToInterval={Dimensions.get("screen").width - 60}
+          snapToAlignment="center"
+          decelerationRate="fast"
+        />
       </View>
     </View>
   );

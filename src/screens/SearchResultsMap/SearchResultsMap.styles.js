@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     width: "100%",
   },
   carousel: {
-    position: "absolute",
     bottom: 0,
+    position: "absolute",
   },
 });
