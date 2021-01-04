@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { styles } from "./SearchResultsMap.styles";
-import { MapMarker } from "~/components";
+import { MapMarker, PostCarouselItem } from "~/components";
 import places from "../../../assets/data/feed";
 
 const initialRegion = {
@@ -36,6 +36,9 @@ const SearchResultsMap = () => {
             );
           })}
       </MapView>
+      <View style={styles.carousel}>
+        <PostCarouselItem post={places[0]} />
+      </View>
     </View>
   );
 };

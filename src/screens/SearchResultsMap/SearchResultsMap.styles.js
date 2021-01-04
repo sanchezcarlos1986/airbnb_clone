@@ -6,4 +6,8 @@ export const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+  carousel: {
+    position: "absolute",
+    bottom: 0,
+  },
 });
