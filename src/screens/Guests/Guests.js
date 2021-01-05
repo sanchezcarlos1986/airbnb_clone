@@ -9,7 +9,7 @@ const Guests = ({ navigation }) => {
   const [infants, setInfants] = useState(0);
 
   useEffect(() => {
-    console.log("Guests.....", { adults, children, infants });
+    // console.log("Guests.....", { adults, children, infants });
   }, [adults, children, infants]);
 
   return (

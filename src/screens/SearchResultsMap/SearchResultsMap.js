@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, FlatList, Dimensions } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { styles } from "./SearchResultsMap.styles";
@@ -15,9 +15,40 @@ const initialRegion = {
 const SearchResultsMap = () => {
   const [selectedPlaceId, setSelectedPlaceId] = useState(null);
 
+  const flatlist = useRef();
+  const map = useRef();
+
+  const viewConfig = useRef({ itemVisiblePercentThreshold: 70 });
+  const onViewChanged = useRef(({ viewableItems }) => {
+    if (viewableItems.length > 0) {
+      const selectedPlace = viewableItems[0].item;
+      setSelectedPlaceId(selectedPlace.id);
+    }
+  });
+
+  useEffect(() => {
+    if (!selectedPlaceId || !flatlist) return;
+
+    const index = places.findIndex(({ id }) => id === selectedPlaceId);
+
+    const selectedPlace = places[index];
+
+    const region = {
+      latitude: selectedPlace.coordinate.latitude,
+      longitude: selectedPlace.coordinate.longitude,
+      latitudeDelta: 0.8,
+      longitudeDelta: 0.8,
+    };
+
+    map.current.animateToRegion(region);
+
+    flatlist.current.scrollToIndex({ index });
+  }, [selectedPlaceId]);
+
   return (
     <View style={styles.map}>
       <MapView
+        ref={map}
         style={styles.map}
         initialRegion={initialRegion}
         provider={PROVIDER_GOOGLE}
@@ -38,6 +69,7 @@ const SearchResultsMap = () => {
       </MapView>
       <View style={styles.carousel}>
         <FlatList
+          ref={flatlist}
           data={places}
           renderItem={({ item }) => <PostCarouselItem post={item} />}
           keyExtractor={(item) => item.id}
@@ -45,6 +77,8 @@ const SearchResultsMap = () => {
           snapToInterval={Dimensions.get("screen").width - 60}
           snapToAlignment="center"
           decelerationRate="fast"
+          viewabilityConfig={viewConfig.current}
+          onViewableItemsChanged={onViewChanged.current}
         />
       </View>
     </View>
