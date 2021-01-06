@@ -1,15 +1,10 @@
 import React from "react";
-import { View, Image, Text, Pressable } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { styles } from "./Post.styles";
+import { View, Image, Text, ScrollView } from "react-native";
+import { styles } from "./DetailedPost.styles";
 
-const Post = ({ post }) => {
-  const navigation = useNavigation();
-  const goToPostPage = () =>
-    navigation.navigate("PostScreen", { postId: post.id });
-
+const DetailedPost = ({ post }) => {
   return (
-    <Pressable style={styles.container} onPress={goToPostPage}>
+    <ScrollView style={styles.container}>
       {/* Image */}
       <Image style={styles.image} source={{ uri: post.image }} />
 
@@ -32,8 +27,10 @@ const Post = ({ post }) => {
 
       {/* Total price */}
       <Text style={styles.totalPrice}>{`$${post.totalPrice} total`}</Text>
-    </Pressable>
+
+      <Text style={styles.longDescription}>{post.description}</Text>
+    </ScrollView>
   );
 };
 
-export default Post;
+export default DetailedPost;

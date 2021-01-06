@@ -1,10 +1,15 @@
 import React from "react";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { styles } from "./PostCarouselItem.styles";
 
 const PostCarouselItem = ({ post }) => {
+  const navigation = useNavigation();
+  const goToPostPage = () =>
+    navigation.navigate("PostScreen", { postId: post.id });
+
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={goToPostPage}>
       <View style={styles.innerContainer}>
         <Image style={styles.image} source={{ uri: post.image }} />
 
@@ -27,7 +32,7 @@ const PostCarouselItem = ({ post }) => {
           </Text>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

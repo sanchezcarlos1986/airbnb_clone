@@ -1,3 +1,4 @@
+export { default as DetailedPost } from "./DetailedPost/DetailedPost";
 export { default as GuestsRow } from "./GuestsRow/GuestsRow";
 export { default as MapMarker } from "./MapMarker/MapMarker";
 export { default as Post } from "./Post/Post";
