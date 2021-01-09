@@ -9,7 +9,7 @@ import {
   EvilIcons,
 } from "@expo/vector-icons";
 
-import { HomeScreen } from "~/screens/";
+import { HomeScreen, Profile } from "~/screens/";
 import ExploreNavigator from "~/navigation/ExploreNavigator";
 
 const Tab = createBottomTabNavigator();
@@ -54,7 +54,7 @@ const HomeTabNavigator = () => (
     />
     <Tab.Screen
       name="Profile"
-      component={HomeScreen}
+      component={Profile}
       options={{
         tabBarIcon: ({ color }) => (
           <EvilIcons name="user" size={30} color={color} />
