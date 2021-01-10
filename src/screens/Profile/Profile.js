@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Image, Text, ScrollView } from "react-native";
-// import firebase from "~/database/firebase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "./Profile.styles";
 import {
   FontAwesome,
@@ -16,19 +16,47 @@ import { Review } from "~/components";
 const avatar =
   "https://media-exp1.licdn.com/dms/image/C4D03AQG14MveQyItiw/profile-displayphoto-shrink_200_200/0/1606485965221?e=1615420800&v=beta&t=MrFCf8X85vjNe7teshJc_mpBLHwkFPzDX1phEu4oUcI";
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [occupation, setOccupation] = useState("");
+  const [picture, setPicture] = useState(avatar);
+  const [languages, setLanguages] = useState("Español");
+
+  const getProfile = async () => {
+    const response = await AsyncStorage.getItem("profile");
+    const profile = JSON.parse(response);
+
+    setName(profile?.name);
+    setDescription(profile?.description);
+    setLocation(profile?.location);
+    setOccupation(profile?.occupation);
+    setPicture(profile?.picture);
+    setLanguages(profile?.languages);
+  };
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      // The screen is focused
+      getProfile();
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <ScrollView style={styles.root}>
       {/* Profile */}
       <View style={styles.myImageView}>
         <View>
-          <Text style={styles.title}>Hola, soy Carlos</Text>
+          <Text style={styles.title}>Hola, soy {name}</Text>
           <Text style={styles.joined}>Se unió en octubre, 2020</Text>
         </View>
         <Image
           style={styles.myImage}
           source={{
-            uri: avatar,
+            uri: picture,
           }}
         />
       </View>
@@ -57,36 +85,42 @@ const Profile = () => {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Acerca de</Text>
         {/* Description */}
-        <View style={styles.aboutDescription}>
-          <FontAwesome5 name="quote-left" size={24} color="#ccc" />
-          <Text style={styles.aboutDescriptionText}>Hola a todos!!!!</Text>
-          <FontAwesome5 name="grip-lines" size={24} color="#ccc" />
-        </View>
-        <View style={styles.sectionItem}>
-          <View style={styles.sectionIcon}>
-            <FontAwesome name="home" size={18} color="black" />
+        {description ? (
+          <View style={styles.aboutDescription}>
+            <FontAwesome5 name="quote-left" size={24} color="#ccc" />
+            <Text style={styles.aboutDescriptionText}>{description}</Text>
+            <FontAwesome5 name="grip-lines" size={24} color="#ccc" />
           </View>
-          <Text style={styles.sectionItemText}>Vive en Santiago, Chile</Text>
-        </View>
-        <View style={styles.sectionItem}>
-          <View style={styles.sectionIcon}>
-            <MaterialIcons name="language" size={18} color="black" />
+        ) : null}
+        {location ? (
+          <View style={styles.sectionItem}>
+            <View style={styles.sectionIcon}>
+              <FontAwesome name="home" size={18} color="black" />
+            </View>
+            <Text style={styles.sectionItemText}>Vive en {location}</Text>
           </View>
-          <Text style={styles.sectionItemText}>Habla Español</Text>
-        </View>
-        <View style={styles.sectionItem}>
-          <View style={styles.sectionIcon}>
-            <MaterialIcons name="work" size={18} color="black" />
+        ) : null}
+        {languages ? (
+          <View style={styles.sectionItem}>
+            <View style={styles.sectionIcon}>
+              <MaterialIcons name="language" size={18} color="black" />
+            </View>
+            <Text style={styles.sectionItemText}>Habla {languages}</Text>
           </View>
-          <Text style={styles.sectionItemText}>
-            Trabaja en Front End Developer
-          </Text>
-        </View>
+        ) : null}
+        {occupation ? (
+          <View style={styles.sectionItem}>
+            <View style={styles.sectionIcon}>
+              <MaterialIcons name="work" size={18} color="black" />
+            </View>
+            <Text style={styles.sectionItemText}>Trabaja en {occupation}</Text>
+          </View>
+        ) : null}
       </View>
 
       {/* Confirm */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Confirmamos a Carlos</Text>
+        <Text style={styles.sectionTitle}>Confirmamos a {name}</Text>
         <View style={styles.sectionItem}>
           <View style={styles.sectionIcon}>
             <Ionicons
@@ -118,25 +152,6 @@ const Profile = () => {
           <Review key={item.id} review={item} />
         ))}
       </View>
-
-      {/* <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-around",
-          padding: 8,
-        }}
-      >
-        <Button
-          icon="account-edit"
-          onPress={() => navigation.navigate("CreatePatient", employee)}
-          title="Edit"
-        />
-        <Button
-          icon="delete"
-          onPress={() => openConfirmationAlert(id)}
-          title="Delete"
-        />
-      </View> */}
     </ScrollView>
   );
 };

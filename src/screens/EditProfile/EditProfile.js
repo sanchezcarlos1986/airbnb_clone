@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Image,
@@ -7,61 +7,70 @@ import {
   Button,
   Pressable,
   TextInput,
-  Modal,
+  ActivityIndicator,
 } from "react-native";
-// import firebase from "~/database/firebase";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import { styles } from "./EditProfile.styles";
 import { pickImageFrom } from "~/helpers/pickImageFrom";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const avatar =
   "https://media-exp1.licdn.com/dms/image/C4D03AQG14MveQyItiw/profile-displayphoto-shrink_200_200/0/1606485965221?e=1615420800&v=beta&t=MrFCf8X85vjNe7teshJc_mpBLHwkFPzDX1phEu4oUcI";
 
-const profile = {
-  name: "Carlos",
-  phone: "11111",
-  description: "Holi!",
-  languages: "Español",
-  location: "Santiago de Chile",
-  occupation: "Front End Developer",
-};
-
-const EditProfile = ({ route }) => {
-  // const [name, setName] = useState(profile?.name || "");
-  // const [phone, setPhone] = useState(profile?.phone || "");
-  const [description, setDescription] = useState(profile?.description || "");
-  const [location, setLocation] = useState(profile?.location || "");
-  const [occupation, setOccupation] = useState(profile?.occupation || "");
+const EditProfile = ({ navigation }) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [occupation, setOccupation] = useState("");
   const [picture, setPicture] = useState(avatar);
-  const [languages, setLanguages] = useState(profile?.languages || "");
-  // const [loadingImage, setLoadingImage] = useState(false);
+  const [languages, setLanguages] = useState("Español");
+  const [loadingImage, setLoadingImage] = useState(false);
 
-  const uploadImage = async (type) => {
-    const imgURL = await pickImageFrom(type, setLoadingImage);
-    console.log("imgURL:", imgURL);
-
-    if (imgURL) {
-      setPicture(imgURL);
-    }
-  };
-
-  const updateProfile = async () => {
-    const data = {
+  const saveData = (img) => {
+    const profile = {
+      name,
       description,
       location,
       occupation,
-      picture,
+      picture: img || picture,
       languages,
     };
 
-    console.log({ data });
+    AsyncStorage.setItem("profile", JSON.stringify(profile));
+  };
 
-    // const dbRef = await firebase.db
-    //   .collection("airbnb-profile")
-    //   .doc(employee.id);
-    // dbRef.set(data);
+  const uploadImage = async (type) => {
+    const imgURL = await pickImageFrom(type, setLoadingImage);
 
-    // navigation.navigate("Profile");
+    if (imgURL) {
+      setPicture(imgURL);
+      setLoadingImage(false);
+      saveData(imgURL);
+    }
+  };
+
+  const getProfile = async () => {
+    const response = await AsyncStorage.getItem("profile");
+    const profile = JSON.parse(response);
+
+    setName(profile?.name);
+    setDescription(profile?.description);
+    setLocation(profile?.location);
+    setOccupation(profile?.occupation);
+    setPicture(profile?.picture);
+    setLanguages(profile?.languages);
+  };
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+  const updateProfile = async () => {
+    try {
+      saveData();
+      navigation.navigate("Profile");
+    } catch (err) {
+      console.error(`Error on save: ${err}`);
+    }
   };
 
   return (
@@ -74,6 +83,9 @@ const EditProfile = ({ route }) => {
             uri: picture,
           }}
         />
+        {loadingImage ? (
+          <ActivityIndicator size="large" color="#f15454" />
+        ) : null}
         <View style={styles.camera}>
           <Pressable
             style={styles.editAvatar}
@@ -89,9 +101,21 @@ const EditProfile = ({ route }) => {
           </Pressable>
         </View>
         <View>
-          <Text style={styles.title}>Hola, soy Carlos</Text>
+          <Text style={styles.title}>Hola, soy {name}</Text>
           <Text style={styles.joined}>Se unió en octubre, 2020</Text>
         </View>
+      </View>
+
+      {/* Name */}
+      <View style={styles.section}>
+        <View style={styles.sectionItem}>
+          <Text style={styles.sectionTitle}>Nombre</Text>
+        </View>
+        <TextInput
+          placeholder="Ej: Carlos"
+          value={name}
+          onChangeText={(text) => setName(text)}
+        />
       </View>
 
       {/* Description */}
@@ -137,9 +161,9 @@ const EditProfile = ({ route }) => {
           <Text style={styles.sectionTitle}>Idiomas</Text>
         </View>
         <TextInput
-          placeholder="Ej: Prevencionista de riesgos"
+          placeholder="Ej: Español"
           value={languages}
-          disabled={true}
+          onChangeText={(text) => setLanguages(text)}
         />
       </View>
 
