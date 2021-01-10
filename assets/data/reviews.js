@@ -3,7 +3,7 @@ export default [
     id: "0",
     image: "https://randomuser.me/api/portraits/women/68.jpg",
     name: "Carolina",
-    date: "marzo, 2020",
+    date: "octubre, 2020",
     from: "Chile",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, in consequuntur. Accusamus, deserunt distinctio? Provident, quo dolor nisi necessitatibus minima, corporis nihil ipsum quibusdam ad harum sapiente tenetur ipsam eos.",

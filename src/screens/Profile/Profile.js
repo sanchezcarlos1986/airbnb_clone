@@ -1,18 +1,10 @@
 import React from "react";
-import {
-  View,
-  Image,
-  Text,
-  Linking,
-  Platform,
-  Alert,
-  ScrollView,
-  Button,
-} from "react-native";
-import firebase from "~/database/firebase";
+import { View, Image, Text, ScrollView } from "react-native";
+// import firebase from "~/database/firebase";
 import { styles } from "./Profile.styles";
 import {
   FontAwesome,
+  FontAwesome5,
   Foundation,
   Ionicons,
   MaterialIcons,
@@ -24,25 +16,7 @@ import { Review } from "~/components";
 const avatar =
   "https://media-exp1.licdn.com/dms/image/C4D03AQG14MveQyItiw/profile-displayphoto-shrink_200_200/0/1606485965221?e=1615420800&v=beta&t=MrFCf8X85vjNe7teshJc_mpBLHwkFPzDX1phEu4oUcI";
 
-const Profile = ({ route, navigation }) => {
-  const openDial = (tel) => {
-    const telBase = Platform.OS === "android" ? "tel" : "telprompt";
-    Linking.openURL(`${telBase}: +${tel}`);
-  };
-
-  const deleteUser = async (id) => {
-    const dbRef = await firebase.db.collection("employees").doc(id);
-    dbRef.delete();
-    navigation.navigate("Home");
-  };
-
-  const openConfirmationAlert = () => {
-    Alert.alert("Remove User", "Are you sure?", [
-      { text: "Yes", onPress: () => deleteUser(id) },
-      { text: "No", onPress: () => console.log(id), style: "cancel" },
-    ]);
-  };
-
+const Profile = () => {
   return (
     <ScrollView style={styles.root}>
       {/* Profile */}
@@ -75,13 +49,19 @@ const Profile = ({ route, navigation }) => {
           <View style={styles.sectionIcon}>
             <Foundation name="comment-quotes" size={24} color="#f39c12" />
           </View>
-          <Text style={styles.sectionItemText}>9 reseñas</Text>
+          <Text style={styles.sectionItemText}>{reviews.length} reseñas</Text>
         </View>
       </View>
 
       {/* About */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Acerca de</Text>
+        {/* Description */}
+        <View style={styles.aboutDescription}>
+          <FontAwesome5 name="quote-left" size={24} color="#ccc" />
+          <Text style={styles.aboutDescriptionText}>Hola a todos!!!!</Text>
+          <FontAwesome5 name="grip-lines" size={24} color="#ccc" />
+        </View>
         <View style={styles.sectionItem}>
           <View style={styles.sectionIcon}>
             <FontAwesome name="home" size={18} color="black" />

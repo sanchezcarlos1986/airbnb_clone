@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const imageSize = 90;
+const imageSize = 130;
 const fontSize = 17;
 
 export const styles = StyleSheet.create({
@@ -11,9 +11,11 @@ export const styles = StyleSheet.create({
   },
   myImageView: {
     alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
     paddingVertical: 10,
+    marginBottom: 15,
+    borderBottomColor: "#eee",
+    borderBottomWidth: 1,
+    paddingBottom: 20,
   },
   myImage: {
     height: imageSize,
@@ -21,6 +23,11 @@ export const styles = StyleSheet.create({
     marginTop: imageSize / 3,
     marginBottom: 20,
     borderRadius: imageSize / 2,
+  },
+  camera: {
+    flexDirection: "row",
+    width: 100,
+    justifyContent: "space-between",
   },
   title: {
     fontSize: 28,
@@ -30,13 +37,8 @@ export const styles = StyleSheet.create({
     color: "#333",
     fontSize,
   },
-  aboutDescription: {
-    paddingVertical: 10,
-    marginVertical: 20,
-  },
-  aboutDescriptionText: {
-    fontSize: 22,
-    paddingVertical: 10,
+  editAvatar: {
+    marginVertical: 8,
   },
   section: {
     borderBottomColor: "#eee",
@@ -60,5 +62,8 @@ export const styles = StyleSheet.create({
   },
   sectionIcon: {
     width: 22,
+  },
+  btnSave: {
+    marginBottom: 20,
   },
 });

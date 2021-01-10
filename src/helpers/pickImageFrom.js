@@ -1,5 +1,5 @@
-import * as ImagePicker from 'expo-image-picker';
-import {setNewFile, handleUploadImage} from '~/helpers';
+import * as ImagePicker from "expo-image-picker";
+import { setNewFile, handleUploadImage } from "~/helpers";
 
 const uploadImageSetting = {
   mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -9,19 +9,19 @@ const uploadImageSetting = {
 };
 
 export const pickImageFrom = async (pickerType, setLoadingImage) => {
-  if (pickerType !== 'camera' && pickerType !== 'gallery') return false;
+  if (pickerType !== "camera" && pickerType !== "gallery") return false;
 
   const permissionType =
-    pickerType === 'gallery'
-      ? 'requestCameraRollPermissionsAsync'
-      : 'requestCameraPermissionsAsync';
+    pickerType === "gallery"
+      ? "requestMediaLibraryPermissionsAsync"
+      : "requestCameraPermissionsAsync";
   const launchType =
-    pickerType === 'gallery' ? 'launchImageLibraryAsync' : 'launchCameraAsync';
+    pickerType === "gallery" ? "launchImageLibraryAsync" : "launchCameraAsync";
 
   const permissionResult = await ImagePicker[permissionType]();
 
   if (permissionResult.granted === false) {
-    alert('Permission to access camera roll is required!');
+    alert("Permission to access camera roll is required!");
     return;
   }
 
