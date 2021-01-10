@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DestinationSearch /> test against snapshot 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "white",
+      "flex": 1,
+      "height": 400,
+      "padding": 20,
+    }
+  }
+>
+  <View
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+          undefined,
+        ]
+      }
+    >
+      <TextInput
+        allowFontScaling={true}
+        clearButtonMode="while-editing"
+        onBlur={[Function]}
+        onChangeText={[Function]}
+        onFocus={[Function]}
+        placeholder="Where are you going?"
+        rejectResponderTermination={true}
+        style={
+          Array [
+            Object {},
+            undefined,
+          ]
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+    </View>
+  </View>
+</View>
+`;
