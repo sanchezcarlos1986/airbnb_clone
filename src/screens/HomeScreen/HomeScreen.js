@@ -9,7 +9,7 @@ const HomeScreen = ({ navigation }) => {
       <Pressable
         style={styles.searchButton}
         onPress={() => {
-          navigation.navigate("Destination Search");
+          navigation.navigate("DestinationSearch");
         }}
       >
         <Fontisto name="search" size={25} color="#f15454" />

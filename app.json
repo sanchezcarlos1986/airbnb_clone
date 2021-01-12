@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "almuerzi",
-    "slug": "almuerzi",
-    "version": "1.0.0",
+    "name": "airbnb",
+    "slug": "airbnb",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -23,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.android.airbnb"
     },
     "web": {
       "favicon": "./assets/favicon.png"

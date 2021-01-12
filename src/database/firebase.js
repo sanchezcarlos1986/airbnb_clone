@@ -1,16 +1,16 @@
 import * as firebase from "firebase";
 import "firebase/firestore";
 
-// import { FIREBASE_API_KEY } from "../config";
+import { FIREBASE_API_KEY } from "../config";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBMh4Ejt7eQQaoN9QTB9x56j5gn8ya2Y8I",
-  authDomain: "airbnb-clone-4be1e.firebaseapp.com",
-  databaseURL: "https://airbnb-clone-4be1e-default-rtdb.firebaseio.com",
-  projectId: "airbnb-clone-4be1e",
-  storageBucket: "airbnb-clone-4be1e.appspot.com",
-  messagingSenderId: "940995974209",
-  appId: "1:940995974209:web:1397e8726d933a1a70e2c0",
+  apiKey: FIREBASE_API_KEY,
+  authDomain: "airbnb-clone-a10b6.firebaseapp.com",
+  databaseURL: "https://airbnb-clone-a10b6-default-rtdb.firebaseio.com",
+  projectId: "airbnb-clone-a10b6",
+  storageBucket: "airbnb-clone-a10b6.appspot.com",
+  messagingSenderId: "627360253040",
+  appId: "1:627360253040:web:5a6ab2a5b78b2c445420b5",
 };
 
 // Initialize Firebase

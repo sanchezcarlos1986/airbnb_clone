@@ -20,7 +20,7 @@ const Router = () => (
         options={{ title: "How many people?" }}
       />
       <Stack.Screen
-        name="Destination Search"
+        name="DestinationSearch"
         component={DestinationSearch}
         options={{ title: "Search your destination" }}
       />

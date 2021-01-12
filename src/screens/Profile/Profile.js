@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Image, Text, ScrollView } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "./Profile.styles";
 import {
   FontAwesome,
@@ -10,6 +9,7 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import firebase from "~/database/firebase";
 import reviews from "../../../assets/data/reviews";
 import { Review } from "~/components";
 
@@ -17,6 +17,7 @@ const avatar =
   "https://media-exp1.licdn.com/dms/image/C4D03AQG14MveQyItiw/profile-displayphoto-shrink_200_200/0/1606485965221?e=1615420800&v=beta&t=MrFCf8X85vjNe7teshJc_mpBLHwkFPzDX1phEu4oUcI";
 
 const Profile = ({ navigation }) => {
+  const [id, setId] = useState(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
@@ -25,16 +26,20 @@ const Profile = ({ navigation }) => {
   const [languages, setLanguages] = useState("Español");
 
   const getProfile = async () => {
-    const response = await AsyncStorage.getItem("profile");
-    const profile = JSON.parse(response);
+    firebase.db.collection("profile").onSnapshot((querySnapshot) => {
+      querySnapshot.docs.forEach((doc) => {
+        const profile = doc.data();
 
-    setName(profile?.name);
-    setDescription(profile?.description);
-    setLocation(profile?.location);
-    setOccupation(profile?.occupation);
-    setPicture(profile?.picture);
-    setLanguages(profile?.languages);
+        profile?.name && setName(profile.name);
+        profile?.description && setDescription(profile.description);
+        profile?.location && setLocation(profile.location);
+        profile?.occupation && setOccupation(profile.occupation);
+        profile?.picture && setPicture(profile.picture);
+        profile?.languages && setLanguages(profile.languages);
+      });
+    });
   };
+
   React.useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       // The screen is focused

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, Pressable } from "react-native";
 import { styles } from "./DestinationSearch.styles";
 import { Entypo } from "@expo/vector-icons";
@@ -6,7 +6,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { GOOGLE_API } from "../../config";
 
 const DestinationItem = ({ item, navigation }) => (
-  <Pressable onPress={() => navigation.navigate("Guests")}>
+  <Pressable onPress={() => navigation.navigate("SearchResults")}>
     <View style={styles.row}>
       <View style={styles.iconContainer}>
         <Entypo name="location-pin" size={30} />

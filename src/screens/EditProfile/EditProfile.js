@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Image,
@@ -12,12 +12,13 @@ import {
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import { styles } from "./EditProfile.styles";
 import { pickImageFrom } from "~/helpers/pickImageFrom";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import firebase from "~/database/firebase";
 
 const avatar =
   "https://media-exp1.licdn.com/dms/image/C4D03AQG14MveQyItiw/profile-displayphoto-shrink_200_200/0/1606485965221?e=1615420800&v=beta&t=MrFCf8X85vjNe7teshJc_mpBLHwkFPzDX1phEu4oUcI";
 
 const EditProfile = ({ navigation }) => {
+  const [id, setId] = useState(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
@@ -26,8 +27,9 @@ const EditProfile = ({ navigation }) => {
   const [languages, setLanguages] = useState("Español");
   const [loadingImage, setLoadingImage] = useState(false);
 
-  const saveData = (img) => {
+  const saveData = async (img) => {
     const profile = {
+      id,
       name,
       description,
       location,
@@ -36,7 +38,10 @@ const EditProfile = ({ navigation }) => {
       languages,
     };
 
-    AsyncStorage.setItem("profile", JSON.stringify(profile));
+    const dbRef = await firebase.db.collection("profile").doc(id);
+    await dbRef.set(profile);
+
+    navigation.navigate("Profile");
   };
 
   const uploadImage = async (type) => {
@@ -50,24 +55,35 @@ const EditProfile = ({ navigation }) => {
   };
 
   const getProfile = async () => {
-    const response = await AsyncStorage.getItem("profile");
-    const profile = JSON.parse(response);
+    firebase.db.collection("profile").onSnapshot((querySnapshot) => {
+      querySnapshot.docs.forEach((doc) => {
+        const profile = doc.data();
 
-    setName(profile?.name);
-    setDescription(profile?.description);
-    setLocation(profile?.location);
-    setOccupation(profile?.occupation);
-    setPicture(profile?.picture);
-    setLanguages(profile?.languages);
+        profile?.id && setId(profile.id);
+        profile?.name && setName(profile.name);
+        profile?.description && setDescription(profile.description);
+        profile?.location && setLocation(profile.location);
+        profile?.occupation && setOccupation(profile.occupation);
+        profile?.picture && setPicture(profile.picture);
+        profile?.languages && setLanguages(profile.languages);
+      });
+    });
   };
-  useEffect(() => {
-    getProfile();
-  }, []);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      // The screen is focused
+      getProfile();
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
 
   const updateProfile = async () => {
     try {
       saveData();
-      navigation.navigate("Profile");
+      // navigation.navigate("Profile");
     } catch (err) {
       console.error(`Error on save: ${err}`);
     }
