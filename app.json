@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "airbnb",
-    "slug": "airbnb",
-    "version": "1.0.2",
+    "name": "airbnb_1_0_5",
+    "slug": "airbnb_1_0_5",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {

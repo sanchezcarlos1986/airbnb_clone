@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 const imageSize = 90;
 const fontSize = 17;
@@ -8,6 +8,13 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     paddingHorizontal: 20,
+  },
+  modal: {
+    alignItems: "center",
+    backgroundColor: "white",
+    flex: 1,
+    justifyContent: "center",
+    padding: 35,
   },
   myImageView: {
     alignItems: "center",

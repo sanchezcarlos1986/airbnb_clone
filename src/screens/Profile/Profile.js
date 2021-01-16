@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Image, Text, ScrollView } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  ScrollView,
+  Modal,
+  ActivityIndicator,
+} from "react-native";
 import { styles } from "./Profile.styles";
 import {
   FontAwesome,
@@ -17,25 +24,21 @@ const avatar =
   "https://media-exp1.licdn.com/dms/image/C4D03AQG14MveQyItiw/profile-displayphoto-shrink_200_200/0/1606485965221?e=1615420800&v=beta&t=MrFCf8X85vjNe7teshJc_mpBLHwkFPzDX1phEu4oUcI";
 
 const Profile = ({ navigation }) => {
-  const [id, setId] = useState(null);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
-  const [occupation, setOccupation] = useState("");
-  const [picture, setPicture] = useState(avatar);
-  const [languages, setLanguages] = useState("Español");
+  const [user, setUser] = useState(null);
 
   const getProfile = async () => {
     firebase.db.collection("profile").onSnapshot((querySnapshot) => {
       querySnapshot.docs.forEach((doc) => {
         const profile = doc.data();
 
-        profile?.name && setName(profile.name);
-        profile?.description && setDescription(profile.description);
-        profile?.location && setLocation(profile.location);
-        profile?.occupation && setOccupation(profile.occupation);
-        profile?.picture && setPicture(profile.picture);
-        profile?.languages && setLanguages(profile.languages);
+        setUser({
+          name: profile?.name ?? "",
+          description: profile?.description ?? "",
+          location: profile?.location ?? "",
+          occupation: profile?.occupation ?? "",
+          picture: profile?.picture ?? avatar,
+          languages: profile?.languages ?? "",
+        });
       });
     });
   };
@@ -52,16 +55,23 @@ const Profile = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.root}>
+      <Modal animationType="slide" transparent={true} visible={!user}>
+        <View style={styles.modal}>
+          <ActivityIndicator size="large" color="#f15454" />
+          <Text>Cargando Perfil</Text>
+        </View>
+      </Modal>
+
       {/* Profile */}
       <View style={styles.myImageView}>
         <View>
-          <Text style={styles.title}>Hola, soy {name}</Text>
+          <Text style={styles.title}>Hola, soy {user?.name}</Text>
           <Text style={styles.joined}>Se unió en octubre, 2020</Text>
         </View>
         <Image
           style={styles.myImage}
           source={{
-            uri: picture,
+            uri: user?.picture,
           }}
         />
       </View>
@@ -90,42 +100,44 @@ const Profile = ({ navigation }) => {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Acerca de</Text>
         {/* Description */}
-        {description ? (
+        {user?.description ? (
           <View style={styles.aboutDescription}>
             <FontAwesome5 name="quote-left" size={24} color="#ccc" />
-            <Text style={styles.aboutDescriptionText}>{description}</Text>
+            <Text style={styles.aboutDescriptionText}>{user.description}</Text>
             <FontAwesome5 name="grip-lines" size={24} color="#ccc" />
           </View>
         ) : null}
-        {location ? (
+        {user?.location ? (
           <View style={styles.sectionItem}>
             <View style={styles.sectionIcon}>
               <FontAwesome name="home" size={18} color="black" />
             </View>
-            <Text style={styles.sectionItemText}>Vive en {location}</Text>
+            <Text style={styles.sectionItemText}>Vive en {user.location}</Text>
           </View>
         ) : null}
-        {languages ? (
+        {user?.languages ? (
           <View style={styles.sectionItem}>
             <View style={styles.sectionIcon}>
               <MaterialIcons name="language" size={18} color="black" />
             </View>
-            <Text style={styles.sectionItemText}>Habla {languages}</Text>
+            <Text style={styles.sectionItemText}>Habla {user.languages}</Text>
           </View>
         ) : null}
-        {occupation ? (
+        {user?.occupation ? (
           <View style={styles.sectionItem}>
             <View style={styles.sectionIcon}>
               <MaterialIcons name="work" size={18} color="black" />
             </View>
-            <Text style={styles.sectionItemText}>Trabaja en {occupation}</Text>
+            <Text style={styles.sectionItemText}>
+              Trabaja en {user.occupation}
+            </Text>
           </View>
         ) : null}
       </View>
 
       {/* Confirm */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Confirmamos a {name}</Text>
+        <Text style={styles.sectionTitle}>Confirmamos a {user?.name}</Text>
         <View style={styles.sectionItem}>
           <View style={styles.sectionIcon}>
             <Ionicons

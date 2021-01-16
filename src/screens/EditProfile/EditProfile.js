@@ -18,27 +18,21 @@ const avatar =
   "https://media-exp1.licdn.com/dms/image/C4D03AQG14MveQyItiw/profile-displayphoto-shrink_200_200/0/1606485965221?e=1615420800&v=beta&t=MrFCf8X85vjNe7teshJc_mpBLHwkFPzDX1phEu4oUcI";
 
 const EditProfile = ({ navigation }) => {
-  const [id, setId] = useState(null);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
-  const [occupation, setOccupation] = useState("");
-  const [picture, setPicture] = useState(avatar);
-  const [languages, setLanguages] = useState("Español");
+  const [user, setUser] = useState(null);
   const [loadingImage, setLoadingImage] = useState(false);
 
   const saveData = async (img) => {
     const profile = {
-      id,
-      name,
-      description,
-      location,
-      occupation,
-      picture: img || picture,
-      languages,
+      id: user.id,
+      name: user.name,
+      description: user.description,
+      location: user.location,
+      occupation: user.occupation,
+      picture: img || user.picture,
+      languages: user.languages,
     };
 
-    const dbRef = await firebase.db.collection("profile").doc(id);
+    const dbRef = await firebase.db.collection("profile").doc(user.id);
     await dbRef.set(profile);
 
     navigation.navigate("Profile");
@@ -48,7 +42,10 @@ const EditProfile = ({ navigation }) => {
     const imgURL = await pickImageFrom(type, setLoadingImage);
 
     if (imgURL) {
-      setPicture(imgURL);
+      setUser({
+        ...user,
+        picture: imgURL,
+      });
       setLoadingImage(false);
       saveData(imgURL);
     }
@@ -59,13 +56,15 @@ const EditProfile = ({ navigation }) => {
       querySnapshot.docs.forEach((doc) => {
         const profile = doc.data();
 
-        profile?.id && setId(profile.id);
-        profile?.name && setName(profile.name);
-        profile?.description && setDescription(profile.description);
-        profile?.location && setLocation(profile.location);
-        profile?.occupation && setOccupation(profile.occupation);
-        profile?.picture && setPicture(profile.picture);
-        profile?.languages && setLanguages(profile.languages);
+        setUser({
+          id: profile?.id ?? "",
+          name: profile?.name ?? "",
+          description: profile?.description ?? "",
+          location: profile?.location ?? "",
+          occupation: profile?.occupation ?? "",
+          picture: profile?.picture ?? avatar,
+          languages: profile?.languages ?? "",
+        });
       });
     });
   };
@@ -96,7 +95,7 @@ const EditProfile = ({ navigation }) => {
         <Image
           style={styles.myImage}
           source={{
-            uri: picture,
+            uri: user?.picture,
           }}
         />
         {loadingImage ? (
@@ -117,7 +116,7 @@ const EditProfile = ({ navigation }) => {
           </Pressable>
         </View>
         <View>
-          <Text style={styles.title}>Hola, soy {name}</Text>
+          <Text style={styles.title}>Hola, soy {user?.name}</Text>
           <Text style={styles.joined}>Se unió en octubre, 2020</Text>
         </View>
       </View>
@@ -129,8 +128,8 @@ const EditProfile = ({ navigation }) => {
         </View>
         <TextInput
           placeholder="Ej: Carlos"
-          value={name}
-          onChangeText={(text) => setName(text)}
+          value={user?.name}
+          onChangeText={(text) => setUser({ ...user, name: text })}
         />
       </View>
 
@@ -142,8 +141,8 @@ const EditProfile = ({ navigation }) => {
         <TextInput
           placeholder="Ej: Hola a todos!"
           multiline
-          value={description}
-          onChangeText={(text) => setDescription(text)}
+          value={user?.description}
+          onChangeText={(text) => setUser({ ...user, description: text })}
         />
       </View>
 
@@ -154,8 +153,8 @@ const EditProfile = ({ navigation }) => {
         </View>
         <TextInput
           placeholder="Ej: Santiago de Chile"
-          value={location}
-          onChangeText={(text) => setLocation(text)}
+          value={user?.location}
+          onChangeText={(text) => setUser({ ...user, location: text })}
         />
       </View>
 
@@ -166,8 +165,8 @@ const EditProfile = ({ navigation }) => {
         </View>
         <TextInput
           placeholder="Ej: Prevencionista de riesgos"
-          value={occupation}
-          onChangeText={(text) => setOccupation(text)}
+          value={user?.occupation}
+          onChangeText={(text) => setUser({ ...user, occupation: text })}
         />
       </View>
 
@@ -178,8 +177,8 @@ const EditProfile = ({ navigation }) => {
         </View>
         <TextInput
           placeholder="Ej: Español"
-          value={languages}
-          onChangeText={(text) => setLanguages(text)}
+          value={user?.languages}
+          onChangeText={(text) => setUser({ ...user, languages: text })}
         />
       </View>
 
