@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { DetailedPost } from "~/components";
+import { Post } from "~/components";
 import { useRoute } from "@react-navigation/native";
 import { styles } from "./PostScreen.styles";
 
@@ -12,7 +12,7 @@ const PostScreen = () => {
 
   return (
     <View style={styles.container}>
-      <DetailedPost post={post} />
+      <Post post={post} detailed />
     </View>
   );
 };

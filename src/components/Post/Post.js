@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Image, Text, Pressable } from "react-native";
+import { Image, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./Post.styles";
 
-const Post = ({ post }) => {
+const Post = ({ post, detailed }) => {
   const navigation = useNavigation();
   const goToPostPage = () =>
     navigation.navigate("PostScreen", { postId: post.id });
@@ -32,6 +32,10 @@ const Post = ({ post }) => {
 
       {/* Total price */}
       <Text style={styles.totalPrice}>{`$${post.totalPrice} total`}</Text>
+
+      {post?.description && Boolean(detailed) ? (
+        <Text style={styles.longDescription}>{post.description}</Text>
+      ) : null}
     </Pressable>
   );
 };

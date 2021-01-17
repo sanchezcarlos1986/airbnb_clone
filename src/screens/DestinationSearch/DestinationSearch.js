@@ -6,7 +6,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { GOOGLE_API } from "../../config";
 
 const DestinationItem = ({ item, navigation }) => (
-  <Pressable onPress={() => navigation.navigate("SearchResults")}>
+  <Pressable onPress={() => navigation.navigate("Guests")}>
     <View style={styles.row}>
       <View style={styles.iconContainer}>
         <Entypo name="location-pin" size={30} />

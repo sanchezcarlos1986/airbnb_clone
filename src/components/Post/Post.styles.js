@@ -35,4 +35,10 @@ export const styles = StyleSheet.create({
     color: "#5b5b5b",
     textDecorationLine: "underline",
   },
+  longDescription: {
+    fontSize: 16,
+    lineHeight: 24,
+    marginTop: 20,
+    marginBottom: 40,
+  },
 });
